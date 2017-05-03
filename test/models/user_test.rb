@@ -1,9 +1,12 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-
   def setup
-    @user = User.create(full_name: 'Irfan Ahmed', email: 'irfandhk@gmail.com')
+    @user = User.create(
+      full_name: 'Irfan Ahmed',
+      email: 'irfandhk@gmail.com',
+      token: SecureRandom.hex
+    )
   end
 
   test 'should generate token itself' do
@@ -16,7 +19,11 @@ class UserTest < ActiveSupport::TestCase
 
   test 'should create a new user with full_name and email' do
     assert_difference 'User.count' do
-      User.create!(full_name: 'Irfan Ahmed', email: 'irfandhk@gmail.com')
+      User.create!(
+        full_name: 'Irfan Ahmed',
+        email: 'irfandhk@gmail.com',
+        token: SecureRandom.hex
+      )
     end
   end
 end

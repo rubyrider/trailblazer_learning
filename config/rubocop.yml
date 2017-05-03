@@ -1,0 +1,17 @@
+AllCops:
+  Exclude:
+    - config.ru
+    - db/seeds.rb
+    - db/schema.rb
+    - Gemfile
+    - Rakefile
+    - bin/*
+    - config/puma.rb
+    - db/migrate/*
+    - config/environments/*
+    - config/initializers/*
+    - config/application.rb
+    - config/spring.rb
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
