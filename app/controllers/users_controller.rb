@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :current_user_required, only: [:show]
+  before_action :current_user_required, only: [:show, :update]
 
   # Returns a current_user data in json format
   #
@@ -58,6 +58,40 @@ class UsersController < ApplicationController
   #
   def create
     @result = User::Create.(user_params)
+
+    render json: @result['presenter.default'], status: @result['response.status']
+  end
+
+  # Update current user
+  #
+  # PUT /user
+  #
+  # params:
+  #   email - A valid and unique email address. Required field.
+  #   full_name - A full name of the user.
+  #
+  # = Examples
+  #
+  #   resp = put("/user", params: { email: 'rubyridergo@gmail.com' },
+  #   header: { "HTTP_AUTHORIZATION" => "Token dcbb7b36acd4438d07abafb8e28605a4" })
+  #
+  #   resp.status
+  #   => 200
+  #
+  #   resp.body
+  #   => { id: 1, email: 'rubyridergo@gmail.com', full_name: 'Irfan Ahmed', token: 'dcbb7b36acd4438d07abafb8e28605a4' }
+  #
+  #   resp = conn.post("/user", email: 'rubyridergo@gmail.com' ),
+  #   header: { "HTTP_AUTHORIZATION" => "Token dcbb7b36acd4438d07abafb8e28605a4" })
+  #
+  #   resp.status
+  #   => 204
+  #
+  #   resp.body
+  #   => { "errors": { "email": [ "has already been taken" ] } }
+  #
+  def update
+    @result = User::Update.(user_params.merge(id: current_user.id))
 
     render json: @result['presenter.default'], status: @result['response.status']
   end
