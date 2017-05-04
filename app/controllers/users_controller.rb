@@ -1,5 +1,35 @@
 class UsersController < ApplicationController
 
+  before_action :current_user_required, only: [:show]
+
+  # Returns a current_user data in json format
+  #
+  # GET /user
+  #
+  # = Examples
+  #
+  #   resp = get("/user", header: {"HTTP_AUTHORIZATION" => "Token dcbb7b36acd4438d07abafb8e28605a4"})
+  #
+  #   resp.status
+  #   => 200
+  #
+  #   resp.body
+  #   => { id: 1, email: 'irfandhk@gmail.com', full_name: 'Irfan Ahmed', token: 'dcbb7b36acd4438d07abafb8e28605a4' }
+  #
+  #   resp = conn.get("/user")
+  #
+  #   resp.status
+  #   => 401
+  #
+  #   resp.body
+  #   => { "errors": 'Access denied' }
+  #
+  def show
+    @result = User::Show.({}, current_user: current_user)
+
+    render json: @result['presenter.default'], status: @result['response.status']
+  end
+
   # Returns a list of recent projects for a given user
   #
   # POST /users
