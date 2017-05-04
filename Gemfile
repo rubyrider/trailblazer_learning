@@ -45,9 +45,12 @@ end
 
 gem 'reform', '>= 2.2.0'
 gem 'reform-rails'
+gem 'roar'
 # Windows does not include zoneinfo files,
 # so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'trailblazer'
 gem 'trailblazer-rails'
+gem 'representable'
+gem 'multi_json'

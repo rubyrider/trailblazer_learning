@@ -5,17 +5,21 @@ class User::Create < Trailblazer::Operation
   step Contract::Validate()
   step Contract::Persist()
 
-  success :print_user_info
+  success :generate_json
+  failure :log_errors!
+
+  def log_errors!(options)
+    options['response.status'] = 422
+    options['presenter.default'] = {errors: options['contract.default'].errors.messages }
+  end
+
+  def generate_json(options)
+    options['response.status'] = 201
+    options['presenter.default'] = UserDecorator.new(options['model']).as_json
+  end
 
   # Check or generate token for user
   def ensure_token_generated!(options)
     options['model'].token ||= SecureRandom.hex
-  end
-
-  def print_user_info(options)
-    puts options['model'].id
-    puts options['model'].email
-    puts options['model'].full_name
-    puts options['model'].token
   end
 end
