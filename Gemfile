@@ -44,7 +44,7 @@ group :development do
 end
 
 gem 'reform', '>= 2.2.0'
-gem 'reform-rails'
+gem 'reform-rails', '0.2.0.rc1'
 gem 'roar'
 # Windows does not include zoneinfo files,
 # so bundle the tzinfo-data gem

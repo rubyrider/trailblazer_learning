@@ -1,11 +1,10 @@
-class User::Create < Trailblazer::Operation
-  step Model(User, :new)
-  step :ensure_token_generated!
+class User::Update < Trailblazer::Operation
+  step Model( User, :find )
   step Contract::Build(constant: User::Contract::UserForm)
   step Contract::Validate()
   step Contract::Persist()
 
-  success :generate_json
+  success :generate_json!
   failure :log_errors!
 
   def log_errors!(options)
@@ -13,13 +12,8 @@ class User::Create < Trailblazer::Operation
     options['presenter.default'] = {errors: options['contract.default'].errors.messages }
   end
 
-  def generate_json(options)
-    options['response.status'] = 201
+  def generate_json!(options)
+    options['response.status'] = 200
     options['presenter.default'] = UserDecorator.new(options['model']).to_json
-  end
-
-  # Check or generate token for user
-  def ensure_token_generated!(options)
-    options['model'].token ||= SecureRandom.hex
   end
 end
