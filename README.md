@@ -20,7 +20,7 @@ Params:
 email - A valid and unique email address. Required field.
 full_name - A full name of the user.
 
-resp = post("/users", "email" => "irfandhk@gmail.com")
+resp = post("/users", "email" => "irfandhk@gmail.com", "full_name" => "Irfan Ahmed")
 
 resp.status
 => 200
